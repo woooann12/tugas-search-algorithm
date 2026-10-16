@@ -11,4 +11,18 @@ Program ini adalah implementasi dari **Search Algorithm** menggunakan metode **D
 4. Jalankan program dengan perintah:
    - Untuk Windows: `.\search_algo.exe`
    - Untuk Mac/Linux: `./search_algo`
-5. Program akan menampilkan proses pencarian langkah demi langkah hingga target ditemukan.
+
+## Penjelasan Output (Logika Pencarian AI)
+Setelah program berhasil di-*run*, Terminal akan menampilkan jejak penelusuran (*search trace*) berikut:
+
+```text
+=== Program Search Algorithm (AI) ===
+Misi: Mencari Titik 4, dimulai dari Titik 0
+
+Mengecek Titik (Node) 0...
+Mengecek Titik (Node) 1...
+Mengecek Titik (Node) 3...
+Mengecek Titik (Node) 2...
+Mengecek Titik (Node) 4...
+
+>> Target Titik 4 DITEMUKAN! <<
