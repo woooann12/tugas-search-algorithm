@@ -1,66 +1,142 @@
-# Simulasi Animasi Algoritma Pencarian (BFS) di Terminal
+# Search Algorithm — Grid Pathfinding Simulation
 
-Proyek ini adalah implementasi visual dari algoritma **Breadth-First Search (BFS)** menggunakan bahasa C. Program ini berjalan langsung di terminal atau command prompt dan menampilkan animasi frame-by-frame bagaimana sebuah "agen" mengeksplorasi peta (grid) untuk menemukan rute terpendek dari titik awal ke titik tujuan tanpa menabrak rintangan.
+Proyek ini adalah bagian **Search Algorithm** dari tugas yang terdiri dari tiga topik:
 
-## ✨ Fitur Utama
+| No | Topik | Status | 
+| ----- | ----- | ----- | 
+| 1 | Expert System | *(diisi anggota lain)* | 
+| 2 | **Search Algorithm** | **Dokumen ini** | 
+| 3 | Multi Agent System | *(diisi anggota lain)* | 
 
-- **Visualisasi Real-time:** Menampilkan animasi langkah demi langkah saat agen mencari jalan (eksplorasi) dan saat menggambar rute terpendek yang ditemukan.
-- **Cross-Platform:** Kode ini secara otomatis mendeteksi sistem operasi dan menyesuaikan fungsi jeda (sleep) serta pembersihan layar (clear screen) untuk **Windows, macOS, dan Linux**.
-- **Algoritma BFS Optimal:** Menjamin penemuan rute terpendek (shortest path) pada grid yang tidak memiliki bobot langkah (unweighted grid).
-- **Sistem Backtracking:** Setelah target ditemukan, agen akan melacak kembali (backtrack) jejaknya untuk membentuk garis rute yang jelas.
+Program yang digunakan: **Custom BFS Grid Pathfinding** dalam bahasa C.
+Sistem ini dibangun secara mandiri (*native*) tanpa *library* eksternal untuk mendemonstrasikan algoritma pencarian kecerdasan buatan murni di tingkat terminal.
 
-## 🗺️ Legenda Peta (Grid)
+## 1. Apa itu Search Algorithm?
 
-Saat simulasi berjalan, Anda akan melihat berbagai simbol di layar. Berikut adalah artinya:
+Search Algorithm (Algoritma Pencarian) adalah metode sistematis yang digunakan oleh kecerdasan buatan (agen) untuk mengeksplorasi ruang masalah (*state space*) demi menemukan rute atau solusi paling optimal dari titik awal ke titik tujuan. Agen menggunakan antrean memori untuk mengevaluasi jalur yang mungkin, menghindari rintangan, dan mencegah pergerakan berulang (*infinite loop*).
 
-- `[S]` : **Start** - Posisi awal agen.
-- `[T]` : **Target** - Posisi tujuan atau makanan yang dicari agen.
-- `[#]` : **Obstacle/Wall** - Dinding atau rintangan yang tidak bisa dilewati.
-- `[.]` : **Visited** - Jejak area yang sudah dieksplorasi oleh agen selama proses pencarian.
-- `[*]` : **Path** - Garis rute terpendek menuju target (muncul di akhir jika rute ditemukan).
-- `[ ]` : **Empty** - Ruang kosong yang belum dieksplorasi.
+## 2. Tentang Simulasi Ini
 
-## 🚀 Cara Menjalankan Program
+Simulasi ini menerapkan **Breadth-First Search (BFS)** pada sebuah *Grid Environment* 2D (labirin). Berbeda dengan DFS yang menelusuri satu jalur hingga buntu, BFS mengeksplorasi lingkungan secara radial (menyebar seperti gelombang air) ke segala arah secara bersamaan.
 
-### Prasyarat
-Pastikan Anda sudah menginstal *compiler* C (seperti GCC) di komputer Anda.
+Fitur utama simulasi:
 
-### 1. Kompilasi Kode
-Buka terminal atau command prompt, arahkan ke folder tempat file `search_algo.c` berada, lalu jalankan perintah berikut:
+* **Lingkungan berbasis Grid:** Peta dua dimensi berisi rintangan (`#`).
 
-```bash
-gcc search_algo.c -o search_algo
+* **Objek:** Agen (`S`) dan Target (`T`).
+
+* **Visualisasi Terminal:** Peta dirender ulang secara *real-time* (frame-by-frame) di terminal.
+
+* **Pathfinding & Backtracking:** Menampilkan jejak pencarian (`.`) dan, ketika target ditemukan, otomatis menggambar rute terpendek yang dijamin akurat secara matematis (`*`).
+
+> 💡 **Kenapa menggunakan BFS?** Pada peta *unweighted* (jarak antar kotak sama besar), BFS menjamin agen selalu menemukan **rute mutlak terpendek**. Ini adalah fondasi dari sistem navigasi modern dan kecerdasan buatan pada *Non-Player Characters* (NPC).
+
+## 3. Prasyarat
+
+* **Compiler Bahasa C** (seperti GCC, MinGW, atau Clang).
+
+* Terminal atau Command Prompt standar.
+
+* Layar terminal yang mendukung pembersihan layar bawaan OS.
+
+Cek apakah compiler C sudah terpasang di laptop Anda melalui terminal:
+
+```
+gcc --version
+
+
 ```
 
-### 2. Jalankan Program
-Setelah berhasil dikompilasi, jalankan program dengan perintah berikut sesuai sistem operasi Anda:
+## 4. Instalasi dan Kompilasi
 
-- **Windows:**
-  ```cmd
-  search_algo.exe
-  ```
-- **macOS / Linux:**
-  ```bash
-  ./search_algo
-  ```
+Karena menggunakan bahasa C *native*, program tidak membutuhkan `pip`, `venv`, atau *library* eksternal.
 
-## 🛠️ Cara Mengkustomisasi Peta
+### Opsi A — Terminal (Paling Sederhana)
 
-Anda dapat dengan mudah mengubah bentuk peta atau posisi Start dan Target dengan mengedit file `search_algo.c`:
+Buka direktori tempat file `search_algo.c` disimpan, lalu kompilasi kodenya:
 
-1. **Mengubah Peta:** 
-   Cari variabel `char grid[ROWS][COLS]` di dalam kode dan ubah susunan `#` dan spasi sesuai keinginan Anda. Pastikan ukurannya tetap sesuai dengan konstanta `ROWS` (10) dan `COLS` (20), atau ubah juga nilai konstantanya jika ingin ukuran peta yang berbeda.
+**Windows / macOS / Linux**
 
-2. **Mengubah Posisi Start / Target:**
-   Cari di dalam fungsi `int main()`.
-   ```c
-   Point start = {1, 1};   // Ubah koordinat (Baris, Kolom)
-   Point target = {7, 14}; // Ubah koordinat (Baris, Kolom)
-   ```
-   *Catatan: Indeks baris dan kolom dimulai dari angka 0.*
+```
+gcc search_algo.c -o search_algo
 
-3. **Mengatur Kecepatan Animasi:**
-   Anda bisa mengubah angka pada fungsi `SLEEP(50)` untuk pencarian dan `SLEEP(100)` untuk penggambaran rute di dalam fungsi `run_simulation()`. Semakin kecil angkanya, semakin cepat animasinya.
 
-## 📝 Lisensi
-Proyek ini bersifat *open-source* dan bebas untuk dimodifikasi maupun dipelajari untuk keperluan edukasi.
+```
+
+### Opsi B — IDE (VS Code / Dev-C++)
+
+1. Buka file `search_algo.c` di IDE Anda.
+
+2. Pastikan ekstensi C/C++ sudah terpasang (jika menggunakan VS Code).
+
+3. Gunakan fitur *Run/Play* bawaan, atau jalankan kompilasi menggunakan terminal internal IDE.
+
+## 5. Menjalankan Simulasi
+
+Setelah file *executable* terbentuk dari proses kompilasi, jalankan program:
+
+**Windows (PowerShell / CMD)**
+
+```
+.\search_algo.exe
+
+
+```
+
+**macOS / Linux**
+
+```
+./search_algo
+
+
+```
+
+### Cara kerja singkat
+
+| Komponen | Peran | 
+| ----- | ----- | 
+| `char grid[][]` | Lingkungan grid matriks tempat agen dan rintangan berada. | 
+| Agen `S` (Start) | Titik mula yang menyebarkan antrean pencarian ke 4 arah (Atas, Bawah, Kiri, Kanan). | 
+| `queue` (Antrean FIFO) | Memori yang mencatat kotak mana saja yang harus dieksplorasi selanjutnya berdasarkan kedalaman langkah. | 
+| `render_grid()` | Menghapus frame terminal lama dan mencetak ulang matriks untuk efek animasi visual *real-time*. | 
+
+### Hasil yang diharapkan
+
+Muncul antarmuka peta labirin di terminal. Simbol `.` akan mulai menyebar dari titik `S` mencari jalan. Setelah bersentuhan dengan `T`, program akan berhenti memindai dan menarik garis bintang `*` sebagai rute terpendek, menyajikan animasi pencarian AI secara langsung.
+
+## 6. Hasil Uji di Laptop Masing-Masing
+
+Setiap anggota menjalankan simulasi kompilasi C ini dan mengisi tabel berdasarkan **hasil nyata** di laptopnya.
+
+| Nama | OS (versi) | Compiler | Cara instal/run | Berhasil? | Catatan / error yang ditemui | 
+| ----- | ----- | ----- | ----- | ----- | ----- | 
+| Achilles | Windows 11 | MinGW GCC | VS Code Terminal (`gcc`) | ✅ | Sempat bingung cara *run* di VS Code, namun teratasi dengan menggunakan terminal internal untuk kompilasi manual. Animasi *rendering* terminal berjalan lancar tanpa cacat. | 
+| *(isi)* |  |  |  |  |  | 
+| *(isi)* |  |  |  |  |  | 
+
+## 7. Kendala yang Mungkin Muncul
+
+| Gejala | Kemungkinan penyebab | Solusi | 
+| ----- | ----- | ----- | 
+| `'gcc' is not recognized as an internal or external command` | Compiler MinGW/GCC belum diinstal atau PATH sistem Windows belum diatur. | Instal MinGW, atau gunakan IDE *pre-packaged* seperti Code::Blocks / Dev-C++ yang sudah membawa compiler bawaan. | 
+| Layar berkedip hebat saat animasi | OS mengeksekusi perintah `cls` (clear screen) terlalu cepat. | Buka `search_algo.c`, cari `SLEEP(50)` dan naikkan nilainya menjadi `SLEEP(100)` atau lebih. | 
+| `Permission denied` saat di-run | (Khusus Linux/Mac) File hasil kompilasi belum memiliki izin eksekusi. | Ketik perintah `chmod +x search_algo` lalu jalankan ulang. | 
+
+## 8. Struktur File
+
+```
+/
+├── search_algo.c    # Kode sumber utama algoritma BFS dan animasi
+├── README.md        # Dokumen deskripsi ini
+└── search_algo.exe  # File biner hasil kompilasi (terbuat otomatis)
+
+
+```
+
+## 9. Referensi
+
+* Konsep Breadth-First Search: <https://en.wikipedia.org/wiki/Breadth-first_search>
+
+* Grid-based Pathfinding di AI: <https://www.redblobgames.com/pathfinding/a-star/introduction.html>
+
+* C Standard Library: <https://en.cppreference.com/w/c/header>
