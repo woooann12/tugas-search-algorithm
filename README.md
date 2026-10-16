@@ -1,129 +1,66 @@
-# Search Algorithm — Grid Pathfinding Simulation
+# Simulasi Animasi Algoritma Pencarian (BFS) di Terminal
 
-Proyek ini adalah bagian **Search Algorithm** dari tugas yang terdiri dari tiga topik:
+Proyek ini adalah implementasi visual dari algoritma **Breadth-First Search (BFS)** menggunakan bahasa C. Program ini berjalan langsung di terminal atau command prompt dan menampilkan animasi frame-by-frame bagaimana sebuah "agen" mengeksplorasi peta (grid) untuk menemukan rute terpendek dari titik awal ke titik tujuan tanpa menabrak rintangan.
 
-| No | Topik | Status |
-|----|-------|--------|
-| 1 | Expert System | _(diisi anggota lain)_ |
-| 2 | **Search Algorithm** | **Dokumen ini** |
-| 3 | Multi Agent System | _(diisi anggota lain)_ |
+## ✨ Fitur Utama
 
-Sistem ini dikembangkan secara murni menggunakan standar **Bahasa C**, mendemonstrasikan bagaimana sebuah agen mensimulasikan pemetaan lingkungan secara *real-time* untuk mencari rute terpendek dari satu titik ke titik lain.
+- **Visualisasi Real-time:** Menampilkan animasi langkah demi langkah saat agen mencari jalan (eksplorasi) dan saat menggambar rute terpendek yang ditemukan.
+- **Cross-Platform:** Kode ini secara otomatis mendeteksi sistem operasi dan menyesuaikan fungsi jeda (sleep) serta pembersihan layar (clear screen) untuk **Windows, macOS, dan Linux**.
+- **Algoritma BFS Optimal:** Menjamin penemuan rute terpendek (shortest path) pada grid yang tidak memiliki bobot langkah (unweighted grid).
+- **Sistem Backtracking:** Setelah target ditemukan, agen akan melacak kembali (backtrack) jejaknya untuk membentuk garis rute yang jelas.
 
----
+## 🗺️ Legenda Peta (Grid)
 
-## 1. Apa itu Search Algorithm?
+Saat simulasi berjalan, Anda akan melihat berbagai simbol di layar. Berikut adalah artinya:
 
-Dalam konteks kecerdasan buatan, **Search Algorithm** adalah metode sistematis yang digunakan oleh agen (atau mesin) untuk menelusuri serangkaian *state* (titik/kondisi) demi menemukan solusi paling optimal. Berbeda dengan agen *random walk*, agen berbasis pencarian menggunakan memori dan antrean prioritas untuk menjamin penemuan target. Ini adalah fondasi dari GPS routing dan *pathfinding* NPC dalam *video game*.
+- `[S]` : **Start** - Posisi awal agen.
+- `[T]` : **Target** - Posisi tujuan atau makanan yang dicari agen.
+- `[#]` : **Obstacle/Wall** - Dinding atau rintangan yang tidak bisa dilewati.
+- `[.]` : **Visited** - Jejak area yang sudah dieksplorasi oleh agen selama proses pencarian.
+- `[*]` : **Path** - Garis rute terpendek menuju target (muncul di akhir jika rute ditemukan).
+- `[ ]` : **Empty** - Ruang kosong yang belum dieksplorasi.
 
-## 2. Tentang Simulasi Ini
+## 🚀 Cara Menjalankan Program
 
-Program ini mensimulasikan **Grid Environment 2D**, di mana sebuah agen otonom mencari target/makanan. Berbeda dengan DFS biasa, algoritma yang digunakan di sini adalah **Breadth-First Search (BFS)** dengan fitur visualisasi.
+### Prasyarat
+Pastikan Anda sudah menginstal *compiler* C (seperti GCC) di komputer Anda.
 
-Fitur utama simulasi:
-- **Environment Rendering:** Peta (*Grid*) dirender secara *frame-by-frame* di terminal/konsol.
-- **Entity Objects:** Memiliki objek Agen (`S`), Target (`T`), dan Rintangan/Dinding (`#`).
-- **Exploration Trace:** Menampilkan animasi gelombang pencarian agen yang menyebar (disimbolkan dengan titik `.`).
-- **Optimal Pathing:** Menggunakan mekanisme *backtracking* untuk menggambar rute tercepat (disimbolkan dengan bintang `*`) tepat setelah target ditemukan.
+### 1. Kompilasi Kode
+Buka terminal atau command prompt, arahkan ke folder tempat file `search_algo.c` berada, lalu jalankan perintah berikut:
 
-> 💡 **Kenapa menggunakan BFS?** Pada peta *unweighted* (jarak antar blok sama), BFS secara matematis menjamin agen selalu menemukan **rute paling terpendek**, menjadikannya standar industri yang lebih reliabel dibandingkan DFS untuk kasus tata ruang spasial.
-
----
-
-## 3. Prasyarat
-
-- **Compiler Bahasa C** (GCC, Clang, atau MinGW).
-- Terminal atau Command Prompt standar.
-- Layar terminal yang mendukung pembersihan layar bawaan OS.
-
-Cek apakah compiler C sudah terpasang di laptop Anda:
 ```bash
-gcc --version
+gcc search_algo.c -o search_algo
 ```
 
----
+### 2. Jalankan Program
+Setelah berhasil dikompilasi, jalankan program dengan perintah berikut sesuai sistem operasi Anda:
 
-## 4. Instalasi dan Kompilasi
+- **Windows:**
+  ```cmd
+  search_algo.exe
+  ```
+- **macOS / Linux:**
+  ```bash
+  ./search_algo
+  ```
 
-Karena ini adalah kode *native* C, tidak diperlukan *virtual environment* tambahan seperti Python.
+## 🛠️ Cara Mengkustomisasi Peta
 
-### Opsi A — Melalui Terminal (Windows/macOS/Linux)
+Anda dapat dengan mudah mengubah bentuk peta atau posisi Start dan Target dengan mengedit file `search_algo.c`:
 
-Pastikan file `maze_search.c` berada di direktori aktif Anda.
+1. **Mengubah Peta:** 
+   Cari variabel `char grid[ROWS][COLS]` di dalam kode dan ubah susunan `#` dan spasi sesuai keinginan Anda. Pastikan ukurannya tetap sesuai dengan konstanta `ROWS` (10) dan `COLS` (20), atau ubah juga nilai konstantanya jika ingin ukuran peta yang berbeda.
 
-**Kompilasi:**
-```bash
-gcc maze_search.c -o maze_search
-```
+2. **Mengubah Posisi Start / Target:**
+   Cari di dalam fungsi `int main()`.
+   ```c
+   Point start = {1, 1};   // Ubah koordinat (Baris, Kolom)
+   Point target = {7, 14}; // Ubah koordinat (Baris, Kolom)
+   ```
+   *Catatan: Indeks baris dan kolom dimulai dari angka 0.*
 
-> **Catatan Dependensi Sistem:** Kode ini memiliki makro deteksi OS cerdas (`#ifdef _WIN32`). Ia akan otomatis memilih *header* yang tepat (`windows.h` atau `unistd.h`) untuk merender animasi `Sleep()`, sehingga 100% aman dikompilasi di OS apapun tanpa perlu mengubah baris kode.
+3. **Mengatur Kecepatan Animasi:**
+   Anda bisa mengubah angka pada fungsi `SLEEP(50)` untuk pencarian dan `SLEEP(100)` untuk penggambaran rute di dalam fungsi `run_simulation()`. Semakin kecil angkanya, semakin cepat animasinya.
 
-### Opsi B — Menggunakan IDE (VS Code / Dev-C++)
-
-1. Buka file `maze_search.c` di IDE Anda.
-2. Gunakan fitur *Run* atau *Compile & Run* bawaan (tombol *Play* di VS Code, atau `F11` di Dev-C++).
-
----
-
-## 5. Menjalankan Simulasi
-
-Setelah file kompilasi terbentuk, jalankan perintah ini di terminal:
-
-**Windows (PowerShell / CMD)**
-```bash
-.\maze_search.exe
-```
-
-**macOS / Linux**
-```bash
-./maze_search
-```
-
-### Analisis Cara Kerja Sistem (Komparasi dengan MAS/Westworld)
-
-| Komponen C | Padanan dalam MAS | Peran dalam Simulasi |
-|------------|-------------------|----------------------|
-| Array `char grid[][]` | `GridEnvironment` | Matriks 2D ruang tempat objek dan rintangan berada. |
-| Fungsi `run_simulation()` | `Simulation.run_episode()` | Loop kehidupan (*step*) di mana agen mengambil keputusan. |
-| Array `queue` | `Agent.step()` Memory | Antrean FIFO untuk menavigasi agen menyebar ke segala arah. |
-| Fungsi `render_grid()` | `env.render()` | Menghapus frame lama dan mencetak ulang matriks untuk menciptakan efek animasi visual. |
-
-### Hasil yang Diharapkan
-1. Terminal akan menampilkan peta labirin.
-2. Titik `.` akan muncul menjalar seperti air dari agen (`S`), menunjukkan proses mesin "berpikir" dan memindai rute yang valid.
-3. Begitu target (`T`) bersentuhan dengan gelombang, program berhenti memindai dan langsung menarik garis tegas `*` ke belakang untuk membentuk rute paling optimal.
-
----
-
-## 6. Hasil Uji di Laptop Masing-Masing
-
-Setiap anggota wajib menjalankan kompilasi di atas dan mendokumentasikan hasilnya.
-
-| Nama | OS (versi) | Compiler | Cara instal/run | Berhasil? | Catatan / Error yang ditemui |
-|------|------------|----------|-----------------|-----------|------------------------------|
-| _(Nama Kamu)_ | Windows _(isi)_ | MinGW GCC | VS Code Terminal | ✅ | Berjalan sempurna. Animasi pencarian agen dan rendering rute *frame-by-frame* muncul tanpa cacat di terminal. |
-| _(isi)_ | | | | | |
-| _(isi)_ | | | | | |
-
----
-
-## 7. Kendala yang Mungkin Muncul
-
-Bagian ini memuat error yang paling umum terjadi berdasarkan manajemen lingkungan OS.
-
-| Gejala | Kemungkinan Penyebab | Solusi |
-|--------|----------------------|--------|
-| `'gcc' is not recognized` | Compiler GCC belum dipasang atau belum didaftarkan di *Environment Variables (PATH)*. | Pasang MinGW (Windows), atau jalankan via IDE yang *pre-bundled* dengan compiler. |
-| Animasi berkedip terlalu cepat/parah | Eksekusi `system("cls")` terlalu agresif oleh terminal modern. | Buka file C, tambah angka pada fungsi `SLEEP(50)` menjadi `SLEEP(150)`. |
-| `Permission denied` saat di-*run* (Linux/Mac) | Berkas *binary* hasil kompilasi belum diberi akses eksekusi. | Ketik: `chmod +x maze_search` lalu eksekusi ulang. |
-
----
-
-## 8. Struktur File
-
-```text
-/
-├── maze_search.c    # Kode sumber utama agen pencari
-├── README.md        # Dokumen deskripsi ini
-└── maze_search.exe  # (Akan ter-generate otomatis saat proses GCC)
-```
+## 📝 Lisensi
+Proyek ini bersifat *open-source* dan bebas untuk dimodifikasi maupun dipelajari untuk keperluan edukasi.
